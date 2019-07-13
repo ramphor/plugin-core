@@ -5,12 +5,17 @@
     "require": {
         "jankx/fields": "dev-master"
     },
-    "license": "GPLv3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Puleeno Nguyen",
             "email": "puleeno@gmail.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Ramphor\\Plugin": "src/"
+        }
+    }
 }
