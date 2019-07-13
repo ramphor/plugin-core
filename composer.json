@@ -15,7 +15,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Ramphor\\Plugin": "src/"
+            "Ramphor\\Plugin\\": "src/"
         }
     }
 }
