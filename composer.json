@@ -1,0 +1,16 @@
+{
+    "name": "ramphor/plugin-core",
+    "description": "The core of plugins are developed by The Ramphor Premium",
+    "type": "library",
+    "require": {
+        "jankx/fields": "dev-master"
+    },
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Puleeno Nguyen",
+            "email": "puleeno@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
