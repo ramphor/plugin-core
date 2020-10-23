@@ -6,6 +6,10 @@ class Menu {
 
     public function registeMetabox() {
         static::$ramphorNavItems = $this->get_nav_items();
+        if (empty(static::$ramphorNavItems)) {
+            // Don't show ramphor menu items when static::$ramphorNavItems value is empty
+            return;
+        }
 
         add_meta_box(
             'ramphor_nav_links',

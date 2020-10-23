@@ -22,6 +22,6 @@ class UIManager {
     }
 
     public function initMenu() {
-        add_action('admin_head-nav-menus.php', array($this->menu, 'add_menu_meta_boxes'));
+        add_action('admin_head-nav-menus.php', array($this->menu, 'registeMetabox'));
     }
 }
