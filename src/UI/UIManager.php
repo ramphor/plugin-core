@@ -6,7 +6,7 @@ class UIManager {
 
     public $menu;
 
-    public static function getIntance() {
+    public static function getInstance() {
         if (is_null(static::$instance)) {
             static::$instance = new static();
         }
