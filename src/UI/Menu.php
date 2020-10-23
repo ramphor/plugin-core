@@ -2,10 +2,13 @@
 namespace Ramphor\Core\UI;
 
 class Menu {
-    protected static $ramphorNavItems = array();
+    protected static $ramphorNavItems;
+    protected static $ramphorNavItemsArgs;
 
     public function registeMetabox() {
-        static::$ramphorNavItems = $this->get_nav_items();
+        if (is_null(static::$ramphorNavItems)) {
+            static::$ramphorNavItems = $this->get_nav_items();
+        }
         if (empty(static::$ramphorNavItems)) {
             // Don't show ramphor menu items when static::$ramphorNavItems value is empty
             return;
@@ -31,21 +34,20 @@ class Menu {
 
     protected function create_menu_nav_item($key)
     {
-        $title = '';
-        if ($key === 'ramphor-logo') {
-            $title = get_bloginfo('name');
-        } elseif ($key === 'ramphor-search-form') {
-            $title = static::$ramphorNavItems[$key];
+        if (is_null(static::$ramphorNavItemsArgs)) {
+            static::$ramphorNavItemsArgs = apply_filters('ramphor_nav_menu_item_args', array());
         }
 
-        $item = wp_parse_args(array(), array(
-            'type' => $key,
-            'title' => $title,
-            'url' => "#ramphor-{$key}",
-            'classes' => null
-        ));
+        $itemsArgs = &static::$ramphorNavItemsArgs;
+        if (isset($itemsArgs[$key])) {
+            return $itemsArgs[$key];
+        }
 
-        return apply_filters("ramphor_nav_{$key}_menu_item", $item, $key);
+        return array(
+            'type' => $key,
+            'url' => "#ramphor-{$key}",
+            'title' => ucfirst(preg_replace('/[_|\-]/', ' ', $key)),
+        );
     }
 
     protected function render_menu_item_hidden_input($index, $item)
@@ -70,7 +72,7 @@ class Menu {
 
     public function nav_menu_links()
     {
-        $items = $this->get_nav_items();
+        $items = static::$ramphorNavItems;
         ?>
         <div id="posttype-ramphor-nav-items" class="posttypediv">
             <div id="tabs-panel-ramphor-nav-items" class="tabs-panel tabs-panel-active">
@@ -114,5 +116,18 @@ class Menu {
             </p>
         </div>
         <?php
+    }
+
+    public function setup_nav_menu_item($menu_item) {
+        if (is_null(static::$ramphorNavItems)) {
+            static::$ramphorNavItems = $this->get_nav_items();
+        }
+
+        $items = static::$ramphorNavItems;
+        if (isset($items[$menu_item->type])) {
+            $menu_item->type_label = $items[$menu_item->type];
+        }
+
+        return $menu_item;
     }
 }
