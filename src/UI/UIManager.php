@@ -15,13 +15,14 @@ class UIManager {
 
     private function __construct() {
         $this->init();
+        $this->initMenu();
     }
 
-    public function init() {
+    protected function init() {
         $this->menu = new Menu();
     }
 
-    public function initMenu() {
+    protected function initMenu() {
         add_action('admin_head-nav-menus.php', array($this->menu, 'registeMetabox'));
         add_filter('wp_setup_nav_menu_item', array($this->menu, 'setup_nav_menu_item'));
     }
