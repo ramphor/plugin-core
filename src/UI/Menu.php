@@ -1,11 +1,13 @@
 <?php
 namespace Ramphor\Core\UI;
 
-class Menu {
+class Menu
+{
     protected static $ramphorNavItems;
     protected static $ramphorNavItemsArgs;
 
-    public function registeMetabox() {
+    public function registeMetabox()
+    {
         if (is_null(static::$ramphorNavItems)) {
             static::$ramphorNavItems = $this->get_nav_items();
         }
@@ -27,7 +29,9 @@ class Menu {
     {
         $ramphorNavItems = apply_filters(
             'ramphor_nav_menu_items',
-            array()
+            array(
+                'quick_edit' => __('Quick Edit', 'ramphor'),
+            )
         );
         return $ramphorNavItems;
     }
@@ -118,7 +122,8 @@ class Menu {
         <?php
     }
 
-    public function setup_nav_menu_item($menu_item) {
+    public function setup_nav_menu_item($menu_item)
+    {
         if (is_null(static::$ramphorNavItems)) {
             static::$ramphorNavItems = $this->get_nav_items();
         }
