@@ -2,6 +2,8 @@
 namespace Ramphor\Core\UI;
 
 use WP_Post;
+use WP_User;
+use WP_Term;
 
 class MenuItemRenderer
 {
@@ -18,6 +20,17 @@ class MenuItemRenderer
             return array(
                 'edit_label' => $post_type->labels->edit_item,
                 'url' => get_edit_post_link($queried_object),
+            );
+        } elseif (is_a($queried_object, WP_User::class)) {
+            return array(
+                'edit_label' => __('Edit User'),
+                'url' => get_edit_user_link($queried_object->ID),
+            );
+        } elseif (is_a($queried_object, WP_Term::class)) {
+            $taxonomy = get_taxonomy($queried_object->taxonomy);
+            return array(
+                'edit_label' => $taxonomy->labels->edit_item,
+                'url' => get_edit_term_link($queried_object->term_id, $queried_object->taxonomy),
             );
         }
     }
